@@ -22,4 +22,7 @@ Options:
   -o, --overwrite       overwrite (default False)
   -d, --debug           show debug (default False)
 
+Requirements
+==========
 
+id3reader
