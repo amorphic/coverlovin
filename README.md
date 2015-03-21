@@ -27,5 +27,5 @@ Standalone Usage
 Requirements
 ----------
 
-[simplejson](https://pypi.python.org/pypi/simplejson/)
-[mutagen](https://bitbucket.org/lazka/mutagen)
+* [simplejson](https://pypi.python.org/pypi/simplejson/)
+* [mutagen](https://bitbucket.org/lazka/mutagen)
