@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='CoverLovin',
-    version='2.0.2',
+    version='2.0.3',
     author='James Stewart',
     author_email='webmaster@jimter.net',
     packages=['coverlovin'],
