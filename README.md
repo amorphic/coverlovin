@@ -24,6 +24,13 @@ Standalone Usage
 	  -o, --overwrite       overwrite (default False)
 	  -d, --debug           show debug (default False)
 
+Homebrew formula
+----------
+Using Homebrew you can install this very easily. Simply:
+
+$ brew tap mshick/personal
+$ brew install coverlovin
+
 Requirements
 ----------
 
