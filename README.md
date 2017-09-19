@@ -3,6 +3,8 @@ CoverLovin
 
 Coverlovin is a Python module for collecting artist and album details from a directory hierarchy and downloading cover art from Google Images. It can be used both as a module and as a standalone application.
 
+Support m4a and mp3 files.
+
 Standalone Usage
 ----------
 
@@ -22,7 +24,15 @@ Standalone Usage
 	  -o, --overwrite       overwrite (default False)
 	  -d, --debug           show debug (default False)
 
+Homebrew formula
+----------
+Using Homebrew you can install this very easily. Simply:
+
+$ brew tap mshick/personal
+$ brew install coverlovin
+
 Requirements
 ----------
 
-id3reader
+* [simplejson](https://pypi.python.org/pypi/simplejson/)
+* [mutagen](https://bitbucket.org/lazka/mutagen)

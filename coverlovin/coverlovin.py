@@ -10,8 +10,9 @@ https://launchpad.net/coverlovin'''
 import os, sys
 import urllib, urllib2
 import simplejson
-import id3reader
 import logging
+from mutagen.easymp4 import EasyMP4
+from mutagen.easyid3 import EasyID3
 from optparse import OptionParser
 
 # logging
@@ -37,7 +38,7 @@ def sanitise_for_url(inputString):
     outputString = ''
     for word in words:
         try:
-            word = urllib.quote(word.encode('utf-8'))
+            word = urllib.quote(word)
             outputString += word + '+'
         except Exception, err:
             log.error("Exception: " + str(err))
@@ -128,7 +129,7 @@ def process_dir(thisDir, results=[], coverFiles=[]):
     files = []
 
     # read directory contents
-    if os.path.exists(thisDir): 
+    if os.path.exists(thisDir):
         try:
             for item in os.listdir(thisDir):
                 itemFullPath=os.path.join(thisDir, item)
@@ -136,7 +137,7 @@ def process_dir(thisDir, results=[], coverFiles=[]):
                     dirs.append(itemFullPath)
                 else:
                     files.append(item)
-        except OSError, err: 
+        except OSError, err:
             log.error(err)
             return results
     else:
@@ -156,21 +157,33 @@ def process_dir(thisDir, results=[], coverFiles=[]):
             log.debug("cover file %s exists - skipping" % coverFile)
             return results
     for file in files:
+        mp3Audio = False
+        mp4Audio = False
         fileFullPath = os.path.join(thisDir, file)
+        fileName, fileExtension = os.path.splitext(file)
         # check file for id3 tag info
         try:
-            id3r = id3reader.Reader(fileFullPath)
+            if fileExtension == ".m4a":
+                mp4Audio = EasyMP4(fileFullPath)
+            if fileExtension == ".mp3":
+                mp3Audio = EasyID3(fileFullPath)
         except Exception, err:
             log.error('exception: ' + str(err))
             continue
         # get values and sanitise nulls
-        artist = id3r.getValue('performer')
-        album = id3r.getValue('album')
+        artist = None
+        album = None
+        if mp4Audio:
+            artist = mp4Audio['artist'][0].encode('utf-8')
+            album = mp4Audio['album'][0].encode('utf-8')
+        if mp3Audio:
+            artist = mp3Audio['artist'][0].encode('utf-8')
+            album = mp3Audio['album'][0].encode('utf-8')
         if artist == None: artist = ''
         if album == None: album = ''
         # if either artist or album found, append to results and return
         if artist or album:
-            log.info("album details found: %s/%s in %s" % (artist, album, file))
+            log.info("album details found: %s/%s in %s" % (artist.decode('utf-8'), album.decode('utf-8'), file))
             results.append((thisDir, artist, album))
             return results
     # no artist or album info found, return results unchanged
