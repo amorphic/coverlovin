@@ -1,6 +1,8 @@
 CoverLovin
 ==========
 
+> **This project is abandoned.** Please use [coverlovin2](https://github.com/jtmoon79/coverlovin2) instead.
+
 Coverlovin is a Python module for collecting artist and album details from a directory hierarchy and downloading cover art from Google Images. It can be used both as a module and as a standalone application.
 
 Support m4a and mp3 files.
